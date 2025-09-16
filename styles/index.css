@@ -1,0 +1,173 @@
+html {
+	scroll-snap-type: y mandatory;
+}
+
+section {
+	scroll-snap-align: start;
+}
+
+#hero {
+	flex: 1;
+}
+
+#hero > div {
+	padding: 10em 0;
+}
+
+.heroTxt {
+	float: right;
+}
+
+.heroTxt h1 {
+	display: flex;
+	flex-direction: column;
+	text-align: right;
+	line-height: 90%;
+	margin-bottom: -0.35em;
+}
+
+.heroTxt h1 > * {
+	flex: 1;
+}
+
+#hero .heroBodyText {
+	position: relative;
+	/* top: 100%;
+	transform: translateY(-100%);
+	width: 50%; */
+}
+
+/* #hero .desc::before {
+	content: "Pleased to meet you. I’m 15 years old and based in Sydney, Australia. I mostly create open-source projects, which I both design and produce. At the moment, I’m learning C++ with skillsets in web development & design, graphics design, various fields of technology and photography. ";
+	position: absolute;
+    z-index: -1;
+    opacity: .4;
+} */
+
+#role {
+	--content: "|";
+	--animation: blink 0.5s infinite linear alternate;
+	margin-top: -20px;
+	margin-right: -20px;
+	padding: 20px;
+	padding-right: 0;
+	z-index: 1;
+}
+
+#role::after {
+	font-weight: 300;
+	margin-left: -10px;
+	content: var(--content);
+	animation: var(--animation);
+}
+
+@keyframes blink {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0.75;
+	}
+}
+
+.sfx:has(svg) {
+	position: relative;
+	height: 20px;
+	width: 20px;
+	margin-left: auto;
+	margin-right: 16px;
+}
+
+/* the next thing */
+
+#about {
+	display: flex;
+	align-items: center;
+	/* justify-content: center; */
+}
+
+#about h1 {
+	transform: translateY(-25%);
+}
+
+.carousel {
+	position: absolute;
+	display: flex;
+	transform: translateY(100px);
+}
+
+.flyBy {
+	/* position: absolute; */
+	transform: translateY(10em);
+	animation: fly 25s linear infinite;
+}
+
+@keyframes fly {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-100%);
+	}
+}
+
+.carousel ul {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+}
+
+.carousel li {
+	list-style: none;
+	font-size: 2em;
+	white-space: nowrap;
+}
+
+.carousel li::before {
+	content: "•";
+	margin-right: 20px;
+}
+
+/** Progression section */
+#next {
+	align-items: center;
+	justify-content: center;
+	background: white;
+	width:100%;
+}
+
+#next > div {
+	height: 100%;
+	display: grid;
+}
+
+#next p {
+	margin: auto;
+	justify-self: flex-start;
+}
+
+#next .container {
+	justify-self: flex-end;
+}
+
+#next .container {
+	white-space: nowrap;
+}
+
+#next #select {
+	display: inline-block;
+	width: 320px;
+	border: solid 5px;
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-image: linear-gradient(90deg, var(--accent1), var(--accent2)) 10;
+	cursor: pointer;
+}
+
+#next #select::after {
+	content: "v";
+	float: right;
+	margin-right: 10px;
+	font-weight: 300;
+}
