@@ -164,10 +164,3 @@ section {
 	border-image: linear-gradient(90deg, var(--accent1), var(--accent2)) 10;
 	cursor: pointer;
 }
-
-#next #select::after {
-	content: "v";
-	float: right;
-	margin-right: 10px;
-	font-weight: 300;
-}
