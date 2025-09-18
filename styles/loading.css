@@ -1,6 +1,7 @@
 /** Loading screen */
 #foreground {
-	overflow: hidden;
+	overflow: visible;
+	z-index: 999;
 }
 
 #followCursor {

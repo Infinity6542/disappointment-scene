@@ -37,13 +37,16 @@ section {
 
 body {
 	background: var(--bg);
-	color: var(--text);
 	margin: 0;
 	overflow-x: hidden;
+	overflow-y: scroll;
+	height: auto;
+	min-height: 100vh;
 }
 
 .fonted {
 	font-family: Satoshi, sans-serif;
+	color: var(--text);
 }
 
 .flex {

@@ -1,7 +1,3 @@
-body {
-    /* overflow-y: hidden; */
-}
-
 #proceed {
     position: relative;
     top: 4px;
@@ -81,15 +77,6 @@ body {
 .header .lucide {
     height: 50px;
     width: 50px;
-}
-
-.cards {
-    display: grid;
-    /* grid-template-columns: 1fr 1fr; */
-    gap: 55px;
-    padding: 20px;
-    height: 75vh;
-    overflow: scroll;
 }
 
 .card {

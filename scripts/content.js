@@ -3,7 +3,9 @@ import {
 	hover,
 } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
 
-document.body.style.overflow = "hidden";
+// Allow scrolling
+document.body.style.overflowX = "hidden";
+document.body.style.overflowY = "auto";
 
 let circle = document.querySelector("#followCursor");
 hover("a, .bubble", () => {
