@@ -6,22 +6,6 @@
 	padding: 10em 0;
 }
 
-.heroTxt {
-	float: right;
-}
-
-.heroTxt h1 {
-	display: flex;
-	flex-direction: column;
-	text-align: right;
-	line-height: 90%;
-	margin-bottom: -0.35em;
-}
-
-.heroTxt h1 > * {
-	flex: 1;
-}
-
 #hero .heroBodyText {
 	position: relative;
 	/* top: 100%;
