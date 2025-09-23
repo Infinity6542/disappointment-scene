@@ -9,6 +9,7 @@ export function sleep(ms) {
 }
 
 const circle = document.getElementById("followCursor");
+let quadrant = 0;
 
 hover("h1:not(#loading)", () => {
 	animate(
@@ -67,14 +68,14 @@ let messages = [
 	"I fail, you fail, we all fail",
 	"Just give up",
 	"Maybe next time",
-	"Is this even worth it"
+	"Is this even worth it",
 ];
 
 let currentMessageIndex = 0;
 let activeTextElements = [];
 function createBackgroundTextElement() {
-	const textElement = document.createElement('div');
-	textElement.className = 'backgroundText';
+	const textElement = document.createElement("div");
+	textElement.className = "backgroundText";
 	textElement.style.cssText = `
 		position: absolute;
 		top: 50%;
@@ -90,51 +91,84 @@ function createBackgroundTextElement() {
 		white-space: nowrap;
 	`;
 	textElement.classList.add("fonted");
-	
-	const heroSection = document.getElementById('hero');
+
+	const heroSection = document.getElementById("hero");
 	heroSection.appendChild(textElement);
 	return textElement;
 }
 
 function getRandomPosition() {
-	const minX = 15;
-	const maxX = 85;
-	const minY = 20;
-	const maxY = 80;
-	
+	if (quadrant === 4) {
+		quadrant = 1;
+	} else {
+		quadrant++;
+	}
+
+	document.querySelector("#hero p").getBoundingClientRect();
+
+	let minX, maxX, minY, maxY;
+
+	if (quadrant === 1) {
+		// Top-left quadrant
+		minX = 10;
+		maxX = 50;
+		minY = 10;
+		maxY = 50;
+	} else if (quadrant === 2) {
+		// Top-right quadrant
+		minX = 50;
+		maxX = 90;
+		minY = 10;
+		maxY = 50;
+	} else if (quadrant === 3) {
+		// Bottom-left quadrant
+		minX = 10;
+		maxX = 50;
+		minY = 50;
+		maxY = 90;
+	} else if (quadrant === 4) {
+		// Bottom-right quadrant
+		minX = 50;
+		maxX = 90;
+		minY = 50;
+		maxY = 90;
+	}
+
+	console.log(`Quadrant: ${quadrant}`);
+
 	const randomX = Math.random() * (maxX - minX) + minX;
 	const randomY = Math.random() * (maxY - minY) + minY;
-	
+
 	return {
 		x: randomX,
-		y: randomY
+		y: randomY,
 	};
 }
 
 async function showBackgroundMessage() {
 	const messageIndex = currentMessageIndex;
 	currentMessageIndex = (currentMessageIndex + 1) % messages.length;
-	
+
 	const textElement = createBackgroundTextElement();
 	activeTextElements.push(textElement);
 	const position = getRandomPosition();
-	
+
 	textElement.textContent = messages[messageIndex];
 	textElement.style.left = `${position.x}%`;
 	textElement.style.top = `${position.y}%`;
-	
+
 	await animate(
 		textElement,
 		{ opacity: 0.5 },
 		{ duration: 4, ease: "ease-in-out" }
 	);
-	
+
 	await animate(
 		textElement,
 		{ opacity: 0 },
 		{ duration: 4, ease: "ease-in-out" }
 	);
-	
+
 	textElement.remove();
 	const index = activeTextElements.indexOf(textElement);
 	if (index > -1) {
@@ -145,30 +179,36 @@ async function showBackgroundMessage() {
 let isHeroVisible = true;
 let messageInterval;
 
-const heroObserver = new IntersectionObserver((entries) => {
-	entries.forEach(entry => {
-		isHeroVisible = entry.isIntersecting;
-		if (!isHeroVisible && messageInterval) {
-			clearInterval(messageInterval);
-			messageInterval = null;
-			activeTextElements.forEach(element => {
-				animate(element, { opacity: 0 }, { duration: 1, ease: "ease-out" })
-					.then(() => element.remove());
-			});
-			activeTextElements = [];
-		} else if (isHeroVisible && !messageInterval) {
-			showBackgroundMessage();
-			messageInterval = setInterval(showBackgroundMessage, 2500);
-		}
-	});
-}, {
-	threshold: 0.3
-});
+const heroObserver = new IntersectionObserver(
+	(entries) => {
+		entries.forEach((entry) => {
+			isHeroVisible = entry.isIntersecting;
+			if (!isHeroVisible && messageInterval) {
+				clearInterval(messageInterval);
+				messageInterval = null;
+				activeTextElements.forEach((element) => {
+					animate(
+						element,
+						{ opacity: 0 },
+						{ duration: 1, ease: "ease-out" }
+					).then(() => element.remove());
+				});
+				activeTextElements = [];
+			} else if (isHeroVisible && !messageInterval) {
+				showBackgroundMessage();
+				messageInterval = setInterval(showBackgroundMessage, 2500);
+			}
+		});
+	},
+	{
+		threshold: 0.3,
+	}
+);
 
-const heroSection = document.getElementById('hero');
+const heroSection = document.getElementById("hero");
 heroObserver.observe(heroSection);
 
-sleep(4000).then(() => {
+sleep(5000).then(() => {
 	if (isHeroVisible) {
 		showBackgroundMessage();
 		messageInterval = setInterval(showBackgroundMessage, 2500);
