@@ -104,9 +104,41 @@ function getRandomPosition() {
 		quadrant++;
 	}
 
-	document.querySelector("#hero p").getBoundingClientRect();
+	let text = document.querySelector("#hero p")?.getBoundingClientRect();
+	let heading = document.querySelector("#hero h1")?.getBoundingClientRect();
+	let heroRect = document.getElementById("hero").getBoundingClientRect();
+
+	// Function to check if a position intersects with existing elements
+	function isPositionClear(x, y, elementWidth = 300, elementHeight = 40) {
+		const elementRect = {
+			left: x,
+			right: x + elementWidth,
+			top: y,
+			bottom: y + elementHeight
+		};
+
+		// Check collision with heading
+		if (heading && !(elementRect.right < heading.left || 
+			elementRect.left > heading.right || 
+			elementRect.bottom < heading.top || 
+			elementRect.top > heading.bottom)) {
+			return false;
+		}
+
+		// Check collision with paragraph text
+		if (text && !(elementRect.right < text.left || 
+			elementRect.left > text.right || 
+			elementRect.bottom < text.top || 
+			elementRect.top > text.bottom)) {
+			return false;
+		}
+
+		return true;
+	}
 
 	let minX, maxX, minY, maxY;
+	let attempts = 0;
+	const maxAttempts = 20;
 
 	if (quadrant === 1) {
 		// Top-left quadrant
@@ -134,10 +166,16 @@ function getRandomPosition() {
 		maxY = 90;
 	}
 
-	console.log(`Quadrant: ${quadrant}`);
-
-	const randomX = Math.random() * (maxX - minX) + minX;
-	const randomY = Math.random() * (maxY - minY) + minY;
+	let randomX, randomY, actualX, actualY;
+	do {
+		randomX = Math.random() * (maxX - minX) + minX;
+		randomY = Math.random() * (maxY - minY) + minY;
+		
+		actualX = (randomX / 100) * heroRect.width;
+		actualY = (randomY / 100) * heroRect.height;
+		
+		attempts++;
+	} while (!isPositionClear(actualX, actualY) && attempts < maxAttempts);
 
 	return {
 		x: randomX,
