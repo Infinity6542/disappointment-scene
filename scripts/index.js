@@ -225,3 +225,11 @@ sleep(4000).then(() => {
 	showBackgroundMessage();
 	setInterval(showBackgroundMessage, 1500);
 });
+
+sleep(5500).then(() => {
+	animate(
+		".mouseIndicatorContainer",
+		{ opacity: .8, filter: "blur(0px)" },
+		{ duration: 1, ease: "ease-in-out" }
+	);
+});
