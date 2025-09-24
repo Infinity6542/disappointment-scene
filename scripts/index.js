@@ -108,7 +108,6 @@ function getRandomPosition() {
 	let heading = document.querySelector("#hero h1")?.getBoundingClientRect();
 	let heroRect = document.getElementById("hero").getBoundingClientRect();
 
-	// Function to check if a position intersects with existing elements
 	function isPositionClear(x, y, elementWidth = 300, elementHeight = 40) {
 		const elementRect = {
 			left: x,
@@ -117,7 +116,6 @@ function getRandomPosition() {
 			bottom: y + elementHeight
 		};
 
-		// Check collision with heading
 		if (heading && !(elementRect.right < heading.left || 
 			elementRect.left > heading.right || 
 			elementRect.bottom < heading.top || 
@@ -125,7 +123,6 @@ function getRandomPosition() {
 			return false;
 		}
 
-		// Check collision with paragraph text
 		if (text && !(elementRect.right < text.left || 
 			elementRect.left > text.right || 
 			elementRect.bottom < text.top || 
@@ -214,41 +211,7 @@ async function showBackgroundMessage() {
 	}
 }
 
-let isHeroVisible = true;
-let messageInterval;
-
-const heroObserver = new IntersectionObserver(
-	(entries) => {
-		entries.forEach((entry) => {
-			isHeroVisible = entry.isIntersecting;
-			if (!isHeroVisible && messageInterval) {
-				clearInterval(messageInterval);
-				messageInterval = null;
-				activeTextElements.forEach((element) => {
-					animate(
-						element,
-						{ opacity: 0 },
-						{ duration: 1, ease: "ease-out" }
-					).then(() => element.remove());
-				});
-				activeTextElements = [];
-			} else if (isHeroVisible && !messageInterval) {
-				showBackgroundMessage();
-				messageInterval = setInterval(showBackgroundMessage, 2500);
-			}
-		});
-	},
-	{
-		threshold: 0.3,
-	}
-);
-
-const heroSection = document.getElementById("hero");
-heroObserver.observe(heroSection);
-
-sleep(5000).then(() => {
-	if (isHeroVisible) {
+sleep(4000).then(() => {
 		showBackgroundMessage();
-		messageInterval = setInterval(showBackgroundMessage, 2500);
-	}
+		setInterval(showBackgroundMessage, 1500);
 });
