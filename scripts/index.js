@@ -113,20 +113,30 @@ function getRandomPosition() {
 			left: x,
 			right: x + elementWidth,
 			top: y,
-			bottom: y + elementHeight
+			bottom: y + elementHeight,
 		};
 
-		if (heading && !(elementRect.right < heading.left || 
-			elementRect.left > heading.right || 
-			elementRect.bottom < heading.top || 
-			elementRect.top > heading.bottom)) {
+		if (
+			heading &&
+			!(
+				elementRect.right < heading.left ||
+				elementRect.left > heading.right ||
+				elementRect.bottom < heading.top ||
+				elementRect.top > heading.bottom
+			)
+		) {
 			return false;
 		}
 
-		if (text && !(elementRect.right < text.left || 
-			elementRect.left > text.right || 
-			elementRect.bottom < text.top || 
-			elementRect.top > text.bottom)) {
+		if (
+			text &&
+			!(
+				elementRect.right < text.left ||
+				elementRect.left > text.right ||
+				elementRect.bottom < text.top ||
+				elementRect.top > text.bottom
+			)
+		) {
 			return false;
 		}
 
@@ -167,10 +177,10 @@ function getRandomPosition() {
 	do {
 		randomX = Math.random() * (maxX - minX) + minX;
 		randomY = Math.random() * (maxY - minY) + minY;
-		
+
 		actualX = (randomX / 100) * heroRect.width;
 		actualY = (randomY / 100) * heroRect.height;
-		
+
 		attempts++;
 	} while (!isPositionClear(actualX, actualY) && attempts < maxAttempts);
 
@@ -194,13 +204,13 @@ async function showBackgroundMessage() {
 
 	await animate(
 		textElement,
-		{ opacity: 0.5 },
+		{ opacity: 0.75, filter: "blur(0px)" },
 		{ duration: 4, ease: "ease-in-out" }
 	);
 
 	await animate(
 		textElement,
-		{ opacity: 0 },
+		{ opacity: 0, filter: "blur(100px)" },
 		{ duration: 4, ease: "ease-in-out" }
 	);
 
@@ -212,6 +222,6 @@ async function showBackgroundMessage() {
 }
 
 sleep(4000).then(() => {
-		showBackgroundMessage();
-		setInterval(showBackgroundMessage, 1500);
+	showBackgroundMessage();
+	setInterval(showBackgroundMessage, 1500);
 });

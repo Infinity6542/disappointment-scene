@@ -141,3 +141,9 @@
 	border-image: linear-gradient(90deg, var(--accent1), var(--accent2)) 10;
 	cursor: pointer;
 }
+
+.mouseIndicatorContainer {
+	position: absolute;
+	bottom: 10vh;
+	
+}
