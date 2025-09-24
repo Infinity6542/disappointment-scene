@@ -143,7 +143,42 @@
 }
 
 .mouseIndicatorContainer {
+	opacity: 75%;
 	position: absolute;
 	bottom: 10vh;
-	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+.mouseIndicatorContainer .outer {
+	height: 60px;
+	width: 30px;
+	border: 2px solid var(--text);
+	border-radius: 25px;
+}
+
+.mouseIndicatorContainer .inner {
+	margin-left: auto;
+	margin-right: auto;
+	height: 25px;
+	width: 25px;
+	background: var(--text);
+	border-radius: 50%;
+	position: relative;
+	animation: scrollIndicator 2s ease-in-out infinite alternate;
+}
+
+@keyframes scrollIndicator {
+	0% {
+		top: 2.5px;
+	}
+	100% {
+		top: 32.5px;
+	}
+}
+
+.mouseIndicatorContainer p {
+	font-weight: 600;
 }
